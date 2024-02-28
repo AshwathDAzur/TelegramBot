@@ -12,7 +12,7 @@ bot.on('message', async (msg) => {
     const input_txt = msg.text.toLowerCase().replace(/\n|\r/g, "").trim();
     console.log("Bot Input Message :" + input_txt);
     try {
-        var replyData = await webscrap();
+        const replyData = await webscrap();
         replyData.forEach(reply => {
             const chatId = msg.chat.id;
             bot.sendMessage(chatId, reply);
@@ -24,7 +24,7 @@ bot.on('message', async (msg) => {
 
 async function webscrap() {
     try {
-        var response = await axios.get(url);
+        const response = await axios.get(url);
         const $ = cheerio.load(response.data);
         // Select the div with class "cb-col-100 cb-col cb-schdl"
         const divElement = $(".cb-col-100.cb-col.cb-schdl");
@@ -32,8 +32,16 @@ async function webscrap() {
         const rawData = divElement.text();
         const rawArray = rawData.split("    ");
         const filteredArray = rawArray.filter(item => item.trim().length > 0);
-        const newArray = [`***Live Scores - by Ashwath***`, ...filteredArray];
-        return newArray;
+        const combinedArray = [];
+        for (let i = 0; i < filteredArray.length; i += 2) {
+            if (i + 1 < filteredArray.length) {
+                combinedArray.push(filteredArray[i] + filteredArray[i + 1]);
+            } else {
+                combinedArray.push(filteredArray[i]);
+            }
+        }
+        const replyArray = [`***Live Scores - by Ashwath***`, ...combinedArray];
+        return replyArray;
     }
     catch (error) {
         console.log(error);

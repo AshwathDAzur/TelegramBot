@@ -13,11 +13,16 @@ async function webscrap() {
         const rawData = divElement.text();
         const rawArray = rawData.split("    ");
         const filteredArray = rawArray.filter(item => item.trim().length > 0);
-        console.log(filteredArray);
-        filteredArray.forEach(match => {
-            console.log(match);
-        });
-
+        const combinedArray = [];
+        for (let i = 0; i < filteredArray.length; i += 2) {
+            if (i + 1 < filteredArray.length) {
+                combinedArray.push(filteredArray[i] + filteredArray[i + 1]);
+            } else {
+                combinedArray.push(filteredArray[i]);
+            }
+        }
+        const replyArray = [`***Live Scores - by Ashwath***`, ...combinedArray];
+        return replyArray
     }
     catch (error) {
         console.log(error);
