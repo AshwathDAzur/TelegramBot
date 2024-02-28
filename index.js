@@ -9,8 +9,7 @@ const token = process.env.TOKEN;
 const bot = new TelegramBot(token, { polling: true });
 
 bot.on('message', async (msg) => {
-    const input_txt = msg.text.toLowerCase().replace(/\n|\r/g, "").trim();
-    console.log("Bot Input Message :" + input_txt);
+    console.log("Bot Input Message :" + msg.text);
     try {
         const replyData = await webscrap();
         replyData.forEach(reply => {
@@ -40,8 +39,7 @@ async function webscrap() {
                 combinedArray.push(filteredArray[i]);
             }
         }
-        const replyArray = [`***Live Scores - by Ashwath***`, ...combinedArray];
-        return replyArray;
+        return combinedArray;
     }
     catch (error) {
         console.log(error);
