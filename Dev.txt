@@ -1,5 +1,0 @@
-
-REFERANCE VIDEO : https://www.youtube.com/watch?v=b70_KbYQ2Pc
-WEB SCRAPPING REFERANCE : https://www.youtube.com/watch?v=-ZMwRnxIxZY
-
-For a description of the Bot API, see this page: https://core.telegram.org/bots/api
