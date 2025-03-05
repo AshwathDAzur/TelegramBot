@@ -1,25 +1,7 @@
-require('dotenv').config();
-const TelegramBot = require('node-telegram-bot-api');
 const cheerio = require('cheerio');
 const axios = require('axios');
 
-const url = process.env.SCRAP_URL;
-const token = process.env.TOKEN;
-
-const bot = new TelegramBot(token, { polling: true });
-
-bot.on('message', async (msg) => {
-    console.log("Bot Input Message :" + msg.text);
-    try {
-        const replyData = await webscrap();
-        replyData.forEach(reply => {
-            const chatId = msg.chat.id;
-            bot.sendMessage(chatId, reply);
-        });
-    } catch (error) {
-        console.log(error);
-    }
-});
+const url = "https://www.cricbuzz.com/cricket-match/live-scores/";
 
 async function webscrap() {
     try {
@@ -39,11 +21,12 @@ async function webscrap() {
                 combinedArray.push(filteredArray[i]);
             }
         }
-        return combinedArray;
+        const replyArray = [`***Live Scores - by Ashwath***`, ...combinedArray];
+        return replyArray
     }
     catch (error) {
         console.log(error);
     }
 }
 
-
+webscrap();
